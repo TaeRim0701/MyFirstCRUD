@@ -28,18 +28,33 @@ public class SecurityConfig {
                 .build();
     }
 
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable());
-        http
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/**").permitAll());
-        http
-                .formLogin(Customizer.withDefaults());
+                        .anyRequest().permitAll()) // 🔓 다 허용
+                .formLogin(login -> login.disable()); // 로그인 자체 비활성화
 
         return http.build();
     }
+
+
+//    @Bean
+//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//        http
+//                .csrf(csrf -> csrf.disable());
+//        http
+//                .authorizeHttpRequests(auth -> auth
+//                        .requestMatchers("/user/join").permitAll()
+//                        .requestMatchers("/user/update/**").hasRole("USER")
+//                        .anyRequest().permitAll());  // 나머지는 일단 다 허용
+//        http
+//                .formLogin(login -> login
+//                .loginPage("/login")  // 커스텀 로그인 페이지 지정 (없다면 default 사용됨)
+//                .permitAll());
+//
+//        return http.build();
+//    }
 
 }

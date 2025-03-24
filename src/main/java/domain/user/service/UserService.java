@@ -5,6 +5,7 @@ import domain.user.dto.UserResponseDTO;
 import domain.user.entity.UserEntity;
 import domain.user.entity.UserRoleType;
 import domain.user.repository.UserRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -24,6 +25,24 @@ public class UserService implements UserDetailsService {
     public UserService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
+
+    // 유저 접근 권한 체크
+    public Boolean isAccess(String username) {
+        // 현재 로그인 돼있는 유저의 username
+        String sessionUsername = SecurityContextHolder.getContext().getAuthentication().getName();
+        // 현재 로그인 돼있는 유저의 role
+        String sessionRole = SecurityContextHolder.getContext().getAuthentication().getAuthorities().iterator().next().getAuthority();
+
+        if ("ROLE_ADMIN".equals(sessionRole)) {
+            return true;
+        }
+
+        if (username.equals(sessionUsername)) {
+            return true;
+        }
+
+        return false;
     }
 
     // 유저 한 명 생성
