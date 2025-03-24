@@ -1,10 +1,10 @@
-package domain.user.service;
+package com.example.demo.domain.user.service;
 
-import domain.user.dto.UserRequestDto;
-import domain.user.dto.UserResponseDTO;
-import domain.user.entity.UserEntity;
-import domain.user.entity.UserRoleType;
-import domain.user.repository.UserRepository;
+import com.example.demo.domain.user.dto.UserRequestDto;
+import com.example.demo.domain.user.dto.UserResponseDTO;
+import com.example.demo.domain.user.entity.UserEntity;
+import com.example.demo.domain.user.entity.UserRoleType;
+import com.example.demo.domain.user.repository.UserRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;

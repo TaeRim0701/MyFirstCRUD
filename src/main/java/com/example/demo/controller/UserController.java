@@ -1,8 +1,8 @@
-package controller;
+package com.example.demo.controller;
 
-import domain.user.dto.UserRequestDto;
-import domain.user.dto.UserResponseDTO;
-import domain.user.service.UserService;
+import com.example.demo.domain.user.dto.UserRequestDto;
+import com.example.demo.domain.user.dto.UserResponseDTO;
+import com.example.demo.domain.user.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,5 +51,10 @@ public class UserController {
             userService.updateOneUser(dto, username);
         }
         return "redirect:/user/update/" + username;
+    }
+
+    @GetMapping("/login")
+    public String loginPage() {
+        return "login"; // login.html (Thymeleaf 템플릿)이 존재해야 함
     }
 }
