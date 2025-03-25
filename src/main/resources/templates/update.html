@@ -9,9 +9,9 @@
     <h1>user update page</h1>
     <hr>
 
-    <form action="/user/update/{{USER.username}}" method="post" name="updateForm">
+    <form th:action="@{'/user/update/' + ${USER.username}}" method="post" name="updateForm">
         <input type="password" name="password" placeholder="password"/>
-        <input type="text" name="nickname" placeholder="nickname" value="{{USER.nickname}}"/>
+        <input type="text" name="nickname" placeholder="nickname" th:value="${USER.nickname}"/>
         <input type="submit" value="Update"/>
     </form>
 </body>
