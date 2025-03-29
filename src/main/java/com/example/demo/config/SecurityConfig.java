@@ -36,6 +36,7 @@ public class SecurityConfig {
                         .requestMatchers("/").permitAll()
                         .requestMatchers("/user/join").permitAll()
                         .requestMatchers("/user/update/**").hasRole("USER")
+                        .requestMatchers("/user/board/**").hasRole("USER")
                         .anyRequest().permitAll());  // 나머지는 일단 다 허용
         http
                 .formLogin(login -> login

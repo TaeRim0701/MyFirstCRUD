@@ -24,6 +24,28 @@ public class BoardService {
         this.userRepository = userRepository;
     }
 
+    // 유저 접근 권한 체크
+    public Boolean isAccess(Long id) {
+
+        // 현재 로그인 돼있는 유저의 username
+        String sessionUsername = SecurityContextHolder.getContext().getAuthentication().getName();
+        // 현재 로그인 돼있는 유저의 role
+        String sessionRole = SecurityContextHolder.getContext().getAuthentication().getAuthorities().iterator().next().getAuthority();
+
+        // 수직적으로 ADMIN이면 무조건 접근 가능
+        if ("ROLE_ADMIN".equals(sessionRole)) {
+            return true;
+        }
+
+        // 특정 게시글 id에 대해 본인이 작성했는지 확인
+        String boardUsername = boardRepository.findById(id).orElseThrow().getUserEntity().getUsername();
+        if (sessionUsername.equals(boardUsername)) {
+            return true;
+        }
+
+        return false;
+    }
+
     @Transactional
     public void createOneBoard(BoardRequestDto dto) {
         BoardEntity boardEntity = new BoardEntity();
